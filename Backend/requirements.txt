@@ -1,0 +1,8 @@
+# python-dotenv
+# email-validator
+fastapi
+uvicorn[standard]
+aiosmtplib
+python-multipart
+mysql-connector-python
+jinja2
