@@ -27,14 +27,15 @@
 
 ## 💡 Future Ideas
 
-📬 Email alerts for new contact messages
-🛠 Admin dashboard for approvals
-☁️ Image hosting with S3
-📊 Download analytics chart
+- 📬 Email alerts for new contact messages
+- 🛠 Admin dashboard for approvals
+- ☁️ Image hosting with S3
+- 📊 Download analytics chart
 
 ---
-🤝 Author
-Result of Khayal ae Fursat
-Made with care and creativity by
-Kunjal Garg
-(Techno guyzj 😎)
+## 🤝 Author
+
+- Result of Khayal ae Fursat
+- Made with care and creativity by
+- Kunjal Garg
+- (Techno guyzj 😎)
