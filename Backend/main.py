@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime
 from database import db
+from fastapi.responses import JSONResponse
+from fastapi.requests import Request
 
 print("🚀 Backend has started Kunjal")
 
@@ -13,9 +15,13 @@ app = FastAPI()
 load_dotenv()
 approved_users = set(os.getenv("APPROVED_USERS", "").lower().split(","))
 
-@app.get("/")
-def read_root():
-    return {"message": "API is working"}
+@app.api_route("/", methods=["GET", "HEAD"])
+def root(request: Request):
+    return JSONResponse(content={"message": "API is working"})
+
+# @app.get("/")
+# def read_root():
+#     return {"message": "API is working"}
 
 app.add_middleware(
     CORSMiddleware,

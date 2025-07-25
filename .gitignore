@@ -4,12 +4,26 @@
 /node_modules
 /.pnp
 .pnp.js
+/Backend/node_modules/
 
+controllers/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+*.env
+*.db
+*.sqlite3
+*.log
 # testing
 /coverage
 
 # production
 /build
+build/
+dist/
 
 # misc
 .env
@@ -22,9 +36,7 @@ forms_data.txt
 download_requests.txt
 email_utils.py      
 utils.py
-requirements.txt
 test_email.py
-assets
 
 npm-debug.log*
 yarn-debug.log*
