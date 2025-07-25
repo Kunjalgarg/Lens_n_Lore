@@ -70,7 +70,7 @@ const Gallery = () => {
     if (!userName) return;
 
     try {
-      const response = await fetch(`http://lens-n-lore.onrender.com/api/request-download`, {
+      const response = await fetch(`https://lens-n-lore.onrender.com/api/request-download`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +89,7 @@ const Gallery = () => {
       if (data.allowed) {
         console.log("✅ Approved. Proceeding with download...");
         const link = document.createElement("a");
-        link.href = `http://127.0.0.1:8000/api/image/${imageName}?user=${userName}`;
+        link.href = `httpss://lens-n-lore.onrender.com/api/image/${imageName}?user=${userName}`;
         link.download = imageName;
         document.body.appendChild(link);
         link.click();

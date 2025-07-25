@@ -22,7 +22,7 @@ const ContactForm = ({ isOpen, onClose }) => {
     setStatus("");
 
     try {
-      const res = await fetch("http://lens-n-lore.onrender.com/api/contact", {
+      const res = await fetch("https://lens-n-lore.onrender.com/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
