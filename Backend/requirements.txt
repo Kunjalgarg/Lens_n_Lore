@@ -6,3 +6,4 @@ aiosmtplib
 python-multipart
 mysql-connector-python
 jinja2
+pydantic[email]
