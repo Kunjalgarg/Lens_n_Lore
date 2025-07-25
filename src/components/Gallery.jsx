@@ -50,10 +50,10 @@ const Gallery = () => {
   const [scrollIndex, setScrollIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [activeMain, setActiveMain] = useState(null);
-  const [zoomLevel, setZoomLevel] = useState(3); // 1 = normal, 2 = zoomed, 3 = max zoom
+  const [zoomLevel, setZoomLevel] = useState(3); 
   const [isHovered, setIsHovered] = useState(false);
   const [slideDirection, setSlideDirection] = useState("right");
-  const scale = useMotionValue(1); // dynamic scale for pinch or click
+  const scale = useMotionValue(1); 
   const controls = useAnimation();
   const lastTouchDistanceRef = useRef(null);
   const [activeSubIndex, setActiveSubIndex] = useState(null);
@@ -105,7 +105,6 @@ const Gallery = () => {
     }
   };
 
-
   const handleTouchStart = (e) => {
     setTouchStartX(e.changedTouches[0].clientX);
   };
@@ -113,7 +112,6 @@ const Gallery = () => {
   const handleTouchMove = (e) => {
     setTouchEndX(e.changedTouches[0].clientX);
   };
-
 
   const handleZoom = () => {
     const nextZoom = zoomLevel === 3 ? 1 : zoomLevel + 1;
@@ -192,9 +190,6 @@ const Gallery = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [showModal, activeSubIndex, activeParentMain]);
 
-
-
-
   const handlePrev = () => {
     setSlideDirection("left");
     setScrollIndex((prev) => (prev === 0 ? mainImages.length - 1 : prev - 1));
@@ -238,7 +233,7 @@ const Gallery = () => {
         const distanceDelta = currentDistance - lastTouchDistanceRef.current;
 
         if (Math.abs(distanceDelta) > 10) {
-          // Simple scale steps
+          
           setZoomLevel((prev) => {
             if (distanceDelta > 0 && prev < 3) return prev + 1;
             if (distanceDelta < 0 && prev > 1) return prev - 1;
@@ -253,7 +248,7 @@ const Gallery = () => {
 
 
     const handleTouchEnd = (e) => {
-      // 👇 Swipe gesture logic
+      //  Swipe gesture logic
       if (touchStartX !== null && touchEndX !== null) {
         const deltaX = touchStartX - touchEndX;
 
