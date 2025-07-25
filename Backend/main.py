@@ -48,8 +48,8 @@ async def save_contact(form: ContactForm):
     try:
         cursor = db.cursor()
         cursor.execute(
-            "INSERT INTO forms_data (name, email, message) VALUES (%s, %s, %s)",
-            (form.name, form.email, form.message)
+            "INSERT INTO forms_data (name, email, message, requested_at) VALUES (%s, %s, %s, CONVERT_TZ(NOW(), 'UTC', 'Asia/Kolkata'))",
+            (form.name, form.email, form.message) 
         )
         db.commit()
         cursor.close()
@@ -91,7 +91,7 @@ def request_download(data: DownloadRequest):
 
         cursor = db.cursor()
         cursor.execute(
-            "INSERT INTO download_requests (image, user, approved, requested_at) VALUES (%s, %s, %s, NOW())",
+            "INSERT INTO download_requests (image, user, approved, requested_at) VALUES (%s, %s, %s, CONVERT_TZ(NOW(), 'UTC', 'Asia/Kolkata'))",
             (image, user, int(is_allowed))
         )
         db.commit()
@@ -131,7 +131,7 @@ def download_image(image_name: str, user: str):
 def export_forms():
     try:
         cursor = db.cursor()
-        cursor.execute("SELECT name, email, message FROM forms_data")
+        cursor.execute("SELECT name, email, message, requested_at FROM forms_data")
         rows = cursor.fetchall()
         cursor.close()
 
@@ -141,6 +141,7 @@ def export_forms():
                 f.write(f"Name   : {row[0]}\n")
                 f.write(f"Email  : {row[1]}\n")
                 f.write(f"Message: {row[2]}\n")
+                f.write(f"Requested At: {row[3]}\n")
                 f.write("----------------------\n\n")
 
         return {"message": "✅ forms_data.txt exported"}
