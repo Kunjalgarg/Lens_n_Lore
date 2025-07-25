@@ -26,8 +26,8 @@ def root(request: Request):
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000", 
-        "https://lens-n-lore.vercel.app"
+        "https://lens-n-lore.vercel.app",
+        "http://localhost:3000"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -44,6 +44,7 @@ class ContactForm(BaseModel):
 
 @app.post("/api/contact")
 async def save_contact(form: ContactForm):
+    
     try:
         cursor = db.cursor()
         cursor.execute(
@@ -71,6 +72,7 @@ class DownloadRequest(BaseModel):
 
 @app.post("/api/request-download")
 def request_download(data: DownloadRequest):
+    print("🔔 Incoming download request:", data.dict())
     try:
         user = data.user.strip().lower()
         image = data.image
