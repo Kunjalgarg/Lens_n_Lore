@@ -70,7 +70,7 @@ const Gallery = () => {
     if (!userName) return;
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/request-download`, {
+      const response = await fetch(`http://lens-n-lore.onrender.com/api/request-download`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
