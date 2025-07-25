@@ -127,6 +127,49 @@ def download_image(image_name: str, user: str):
     print(f"✅ Image '{image_name}' successfully sent to user '{user}'")
     return FileResponse(image_path, filename=image_name)
 
+@app.get("/export/forms")
+def export_forms():
+    try:
+        cursor = db.cursor()
+        cursor.execute("SELECT name, email, message FROM forms_data")
+        rows = cursor.fetchall()
+        cursor.close()
+
+        with open("forms_data.txt", "w", encoding="utf-8") as f:
+            for row in rows:
+                f.write("--- Contact Form ---\n")
+                f.write(f"Name   : {row[0]}\n")
+                f.write(f"Email  : {row[1]}\n")
+                f.write(f"Message: {row[2]}\n")
+                f.write("----------------------\n\n")
+
+        return {"message": "✅ forms_data.txt exported"}
+    except Exception as e:
+        print("❌ Export error (forms):", e)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/export/downloads")
+def export_downloads():
+    try:
+        cursor = db.cursor()
+        cursor.execute("SELECT user, image, approved, requested_at FROM download_requests")
+        rows = cursor.fetchall()
+        cursor.close()
+
+        with open("download_requests.txt", "w", encoding="utf-8") as f:
+            for row in rows:
+                f.write("--- Download Request ---\n")
+                f.write(f"User    : {row[0]}\n")
+                f.write(f"Image   : {row[1]}\n")
+                f.write(f"Approved: {bool(row[2])}\n")
+                f.write(f"Requested At: {row[3]}\n")
+                f.write("--------------------------\n\n")
+
+        return {"message": "✅ download_requests.txt exported"}
+    except Exception as e:
+        print("❌ Export error (downloads):", e)
+        raise HTTPException(status_code=500, detail=str(e))
+
 # @app.get("/approve")
 # def approve_download(user: str, image: str):
 #     key = f"{user.strip().lower()}_{image}"
