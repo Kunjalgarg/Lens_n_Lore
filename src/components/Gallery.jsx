@@ -89,7 +89,7 @@ const Gallery = () => {
       if (data.allowed) {
         console.log("✅ Approved. Proceeding with download...");
         const link = document.createElement("a");
-        link.href = `httpss://lens-n-lore.onrender.com/api/image/${imageName}?user=${userName}`;
+        link.href = `https://lens-n-lore.onrender.com/api/image/${imageName}?user=${userName}`;
         link.download = imageName;
         document.body.appendChild(link);
         link.click();
