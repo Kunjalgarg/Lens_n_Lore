@@ -5,7 +5,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import "../index.css";
 import { X, Download } from "lucide-react";
 
-
 const mainImages = [
   "01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg",
   "06.jpg", "07.jpg", "08.jpg", "09.jpg", "0101.jpg",
@@ -63,8 +62,7 @@ const Gallery = () => {
   const [touchEndX, setTouchEndX] = useState(null);
   const [showTouchOverlay, setShowTouchOverlay] = useState(false);
   const holdTimeoutRef = useRef(null);
-  const [isPaused, setIsPaused] = useState(false);
-
+  
   const handleDownloadRequest = async (imageName) => {
     console.log("🔔 Button clicked for:", imageName);
     const userName = prompt("Enter your name for download permission:");
@@ -199,13 +197,12 @@ const Gallery = () => {
     setScrollIndex((prev) => (prev + 1) % mainImages.length);
   };
 
-
   const goToSlide = (index) => {
     setScrollIndex(index);
   };
 
   useEffect(() => {
-  if (isHovered || isPaused) return;
+  if (isHovered || showModal) return;
 
   const interval = setInterval(() => {
     setSlideDirection("right");
@@ -215,7 +212,7 @@ const Gallery = () => {
   }, 3000);
 
   return () => clearInterval(interval);
-}, [isHovered, isPaused]);
+}, [isHovered, showModal]);
 
   useEffect(() => {
     const img = imgRef.current;
@@ -244,20 +241,18 @@ const Gallery = () => {
       }
     };
 
-
-
     const handleTouchEnd = (e) => {
-      //  Swipe gesture logic
+      //  Swipe
       if (touchStartX !== null && touchEndX !== null) {
         const deltaX = touchStartX - touchEndX;
 
         if (Math.abs(deltaX) > 50) {
           if (deltaX > 0) {
-            // Swiped left → next
+            // Left
             setSlideDirection("right");
             setScrollIndex((prev) => (prev + 1) % mainImages.length);
           } else {
-            // Swiped right → previous
+            // Right
             setSlideDirection("left");
             setScrollIndex((prev) =>
               prev === 0 ? mainImages.length - 1 : prev - 1
@@ -269,10 +264,8 @@ const Gallery = () => {
         setTouchEndX(null);
       }
 
-      // 👇 Reset pinch zoom tracker
       lastTouchDistanceRef.current = null;
     };
-
 
     if (img) {
       img.addEventListener("touchstart", handleTouchStart, { passive: false });
@@ -289,17 +282,13 @@ const Gallery = () => {
     };
   }, [zoomLevel, showModal]);
 
-
-
   const openModal = (mainImg) => {
     setActiveMain(mainImg);
     setShowModal(true);
     setZoomLevel(1);
     setActiveSubIndex(null);
     setActiveParentMain(mainImg);
-    setIsPaused(true);
   };
-
 
   return (
     <section className="py-16 bg-black text-white overflow-x-hidden" id="gallery">
@@ -322,7 +311,7 @@ const Gallery = () => {
               onClick={() => openModal(mainImages[scrollIndex])}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              // ✅ Full Mobile Gesture Support
+            
               onTouchStart={(e) => {
                 setIsTouching(true);
                 const x = e.changedTouches[0].clientX;
@@ -337,8 +326,7 @@ const Gallery = () => {
               onTouchMove={(e) => {
                 const x = e.changedTouches[0].clientX;
                 setTouchEndX(x);
-
-                // If moved more than a small threshold, cancel the hold
+                
                 if (Math.abs(x - touchStartX) > 10) {
                   clearTimeout(holdTimeoutRef.current);
                   setShowTouchOverlay(false);
@@ -356,14 +344,11 @@ const Gallery = () => {
                 const threshold = 50;
 
                 if (distance > threshold) {
-                  // Swiped left
                   handleNext();
                 } else if (distance < -threshold) {
-                  // Swiped right
                   handlePrev();
                 }
               }}
-
             >
               <img
                 src={require(`../assets/${mainImages[scrollIndex]}`)}
@@ -385,11 +370,9 @@ const Gallery = () => {
               >
                 <p className="font-semibold">{textOverlayMap[mainImages[scrollIndex]]?.title}</p>
                 <p className="text-xs text-gray-300">{textOverlayMap[mainImages[scrollIndex]]?.caption}</p>
-
               </div>
             </motion.div>
           </AnimatePresence>
-
 
           {/* Arrows + Dots */}
           <div className="flex items-center justify-center mt-5 gap-3 sm:gap-4 flex-wrap">
@@ -417,7 +400,6 @@ const Gallery = () => {
               <ChevronRight size={20} />
             </button>
           </div>
-
         </div>
 
         {/* Modal */}
@@ -435,7 +417,6 @@ const Gallery = () => {
               onClick={() => {
                 setShowModal(false);
                 setZoomLevel(1);
-                setIsPaused(false);
               }}
             >
               <FaTimes />
@@ -463,15 +444,7 @@ const Gallery = () => {
                 object-contain select-none
                 ${zoomLevel === 1 ? "cursor-zoom-in" : "cursor-move"}
   `}
-                />
-
-                {/* <button
-                  onClick={() => handleDownloadRequest(activeMain)}
-                  className="text-sm mt-1 mb-0 text-gray-400 px-3 py-1 hover:text-white"
-                >
-                  Download
-                </button> */}
-
+                  />
 
                 <div className="flex justify-between items-center w-full px-4 mt-4 md:hidden">
                   <button
@@ -502,7 +475,6 @@ const Gallery = () => {
                     <ChevronRight size={24} />
                   </button>
                 </div>
-
               </div>
 
               {/* Sub-images Below Current Main Image */}
@@ -528,7 +500,6 @@ const Gallery = () => {
             </div>
           </div>
         )}
-
       </div>
     </section>
   );
