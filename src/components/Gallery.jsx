@@ -8,7 +8,7 @@ import { X, Download } from "lucide-react";
 
 const mainImages = [
   "01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg",
-  "06.jpg", "07.jpg", "08.jpg", "09.jpg", "010.jpg",
+  "06.jpg", "07.jpg", "08.jpg", "09.jpg", "0101.jpg",
 ];
 
 const subImagesMap = {
@@ -21,7 +21,7 @@ const subImagesMap = {
   "07.jpg": ["071.jpg", "072.jpg", "073.jpg", "074.jpg", "075.jpg"],
   "08.jpg": ["081.jpg", "082.jpg", "083.jpg"],
   "09.jpg": ["091.jpg", "092.jpg", "093.jpg", "094.jpg"],
-  "010.jpg": ["0101.jpg", "0102.jpg", "0103.jpg", "0104.jpg"],
+  "0101.jpg": [],
 };
 
 const textOverlayMap = {
@@ -34,7 +34,7 @@ const textOverlayMap = {
   "07.jpg": { title: "Monsoon Diaries", caption: "Stillness" },
   "08.jpg": { title: "Forest Walk", caption: "Ornamented by Nature" },
   "09.jpg": { title: "Crimson Fragrance", caption: "Phoolon Ka Saaz" },
-  "010.jpg": { title: "मैं कैदी नंबर 213", caption: "गर्ग साहब" },
+  "0101.jpg": { title: "मैं कैदी नंबर 213", caption: "दास्ताँ ख़त्म होने वाली है" },
 };
 
 const getTouchDistance = (touches) => {
