@@ -63,6 +63,7 @@ const Gallery = () => {
   const [touchEndX, setTouchEndX] = useState(null);
   const [showTouchOverlay, setShowTouchOverlay] = useState(false);
   const holdTimeoutRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   const handleDownloadRequest = async (imageName) => {
     console.log("🔔 Button clicked for:", imageName);
@@ -127,7 +128,6 @@ const Gallery = () => {
 
     const container = imgRef.current.getBoundingClientRect();
     const zoomFactor = zoomLevel === 2 ? 1.25 : 1.5;
-
     const extraX = (container.width * zoomFactor - container.width) / 2;
     const extraY = (container.height * zoomFactor - container.height) / 2;
 
@@ -142,7 +142,6 @@ const Gallery = () => {
   useEffect(() => {
     return () => clearTimeout(holdTimeoutRef.current);
   }, []);
-
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -206,17 +205,17 @@ const Gallery = () => {
   };
 
   useEffect(() => {
-    if (isHovered) return;
+  if (isHovered || isPaused) return;
 
-    const interval = setInterval(() => {
-      setSlideDirection("right");
-      setScrollIndex((prev) =>
-        prev === mainImages.length - 1 ? 0 : prev + 1
-      );
-    }, 3000);
+  const interval = setInterval(() => {
+    setSlideDirection("right");
+    setScrollIndex((prev) =>
+      prev === mainImages.length - 1 ? 0 : prev + 1
+    );
+  }, 3000);
 
-    return () => clearInterval(interval);
-  }, [isHovered]);
+  return () => clearInterval(interval);
+}, [isHovered, isPaused]);
 
   useEffect(() => {
     const img = imgRef.current;
@@ -298,11 +297,12 @@ const Gallery = () => {
     setZoomLevel(1);
     setActiveSubIndex(null);
     setActiveParentMain(mainImg);
+    setIsPaused(true);
   };
 
 
   return (
-    <section className="py-16 bg-black text-white" id="gallery">
+    <section className="py-16 bg-black text-white overflow-x-hidden" id="gallery">
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 px-4 text center">
         <h2 className="text-2xl sm:text-3xl md:text-[48px] font-serif mt-10 mb-7 text-center">
           Portfolio Gallery
@@ -435,6 +435,7 @@ const Gallery = () => {
               onClick={() => {
                 setShowModal(false);
                 setZoomLevel(1);
+                setIsPaused(false);
               }}
             >
               <FaTimes />
