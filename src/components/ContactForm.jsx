@@ -18,8 +18,9 @@ const ContactForm = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus("Message sent successfully!");
     setLoading(true);
-    setStatus("");
+    // setStatus("");
 
     try {
       const res = await fetch("https://lens-n-lore.onrender.com/api/contact", {
@@ -30,12 +31,15 @@ const ContactForm = ({ isOpen, onClose }) => {
 
       const data = await res.json();
 
-      if (res.ok) {
-        setStatus("Message sent successfully!");
-        setFormData({ name: "", email: "", message: "" });
-      } else {
+      if (!res.ok) {
         setStatus(data.error || "Something went wrong!");
       }
+      // if (res.ok) {
+      //   setStatus("Message sent successfully!");
+      //   setFormData({ name: "", email: "", message: "" });
+      // } else {
+      //   setStatus(data.error || "Something went wrong!");
+      // }
     } catch (error) {
       setStatus("Server error. Try again later.");
     } finally {
