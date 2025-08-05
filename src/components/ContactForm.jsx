@@ -19,6 +19,7 @@ const ContactForm = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("Message sent successfully!");
+    setFormData({ name: "", email: "", message: "" });
     setLoading(true);
     // setStatus("");
 
