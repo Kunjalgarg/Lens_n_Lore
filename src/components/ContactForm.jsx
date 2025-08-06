@@ -109,7 +109,6 @@ const ContactForm = ({ isOpen, onClose }) => {
 
           <button
             type="submit"
-            disabled={loading}
             className="bg-black text-white px-6 py-2 rounded hover:bg-white hover:text-black 
             border border-black transition-all"
           >
