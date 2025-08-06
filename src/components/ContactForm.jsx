@@ -3,8 +3,9 @@ import { FaTimes } from "react-icons/fa";
 
 const ContactForm = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
+  const [messageSent, setMessageSent] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
@@ -19,8 +20,9 @@ const ContactForm = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("Message sent successfully!");
+    setMessageSent(true);
     setFormData({ name: "", email: "", message: "" });
-    setLoading(true);
+    // setLoading(true);
     // setStatus("");
 
     try {
@@ -34,6 +36,7 @@ const ContactForm = ({ isOpen, onClose }) => {
 
       if (!res.ok) {
         setStatus(data.error || "Something went wrong!");
+        setMessageSent(false);
       }
       // if (res.ok) {
       //   setStatus("Message sent successfully!");
@@ -43,8 +46,9 @@ const ContactForm = ({ isOpen, onClose }) => {
       // }
     } catch (error) {
       setStatus("Server error. Try again later.");
+      setMessageSent(false);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -109,7 +113,7 @@ const ContactForm = ({ isOpen, onClose }) => {
             className="bg-black text-white px-6 py-2 rounded hover:bg-white hover:text-black 
             border border-black transition-all"
           >
-            {loading ? "Sending..." : "Send Message"}
+            {messageSent ? "Send Another Message" : "Send Message"}
           </button>
 
           {status && <p className="text-sm text-center mt-2 text-gray-700">{status}</p>}
