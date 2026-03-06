@@ -1,5 +1,5 @@
 #images
-src/assets
+src/assets/
 
 # dependencies
 /node_modules
